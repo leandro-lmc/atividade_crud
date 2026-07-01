@@ -17,12 +17,12 @@ app.get("/", (requisicao, resposta) => {
       .json({
         mensagem: "API funcionando com sucesso!",
         status: "ok",
-        date: new Date.now(),
+        date: new Date().toLocaleString("pt-BR", {timeZone: "America/Recife"})
       });
   } catch (error) {
     resposta
       .status(500)
-      .json({ mensagem: "Erro ao listar cursos", erro: error });
+      .json({ mensagem: "Erro na API", erro: error });
   }
 });
 
