@@ -94,9 +94,8 @@ app.patch("/editar/:codigo", (requisicao, resposta) => {
  if(!curso){
   return resposta.status(400).json({mensage:"curso não encontrado!"})
  }
- const {novocodigo, novonome, novodescrição, novocargaHoraria, novoinstrutor, novomodalidade, novoquantidadeVagas } = requisicao.body
+ const {novonome, novodescrição, novocargaHoraria, novoinstrutor, novomodalidade, novoquantidadeVagas } = requisicao.body
 
- curso.codigo = novocodigo || curso.codigo
  curso.nome = novonome || curso.nome
  curso.descrição = novodescrição || curso.descrição
  curso.cargaHoraria = novocargaHoraria || curso.cargaHoraria
