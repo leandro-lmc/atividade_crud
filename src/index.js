@@ -9,14 +9,20 @@ const porta = process.env.PORTA;
 
 const cursos = [];
 
-app.get("/listar", (requisicao, resposta) => {
+// verificar a saude da api
+app.get("/", (requisicao, resposta) => {
   try {
-    if (cursos.length === 0) {
-      return resposta.status(200).json({ mensagem: "Nenhum curso encontrado!" });
-    }
-    resposta.status(200).json(cursos);
+    resposta
+      .status(200)
+      .json({
+        mensagem: "API funcionando com sucesso!",
+        status: "ok",
+        date: new Date.now(),
+      });
   } catch (error) {
-    resposta.status(500).json({ mensagem: "Erro ao listar cursos", erro: error });
+    resposta
+      .status(500)
+      .json({ mensagem: "Erro ao listar cursos", erro: error });
   }
 });
 
