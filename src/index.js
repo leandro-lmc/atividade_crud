@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json())
 const porta = process.env.PORTA;
 
-const cursos = [ ];
+const cursos = [];
 
 app.get("/listar", (requisicao, resposta) => {
   try {
@@ -20,7 +20,7 @@ app.get("/listar", (requisicao, resposta) => {
   }
 });
 
-// Endpoint para listar aluno pelo matricula
+// Endpoint para listar curso pelo codigo
 // http://localhost:3000/listar/a92222
 app.get("/listar/:codigo", (requisicao, resposta) => {
   try {
@@ -43,13 +43,13 @@ app.get("/listar/:codigo", (requisicao, resposta) => {
 app.post("/cadastrar", (requisicao, resposta) => {
   try {
     // corpo da requisição com os dados que preciso
-    const { codigo, nome, descrição, cargaHoraria, instrutor, modalidade, quantidadeVagas } = requisicao.body
+    const { codigo, nome, descricao, cargaHoraria, instrutor, modalidade, quantidadeVagas } = requisicao.body
     // Vericando se todos os campos foram preenchidos, caso não retorna erro 400
-    if(!codigo || !nome || !descrição || !cargaHoraria || !instrutor || !modalidade || !quantidadeVagas){
+    if(!codigo || !nome || !descricao || !cargaHoraria || !instrutor || !modalidade || !quantidadeVagas){
       return resposta.status(400).json({mensagem:"Todos os campos são obrigatorios!"})
     }
     // salvando os dados que enviei ao servidor pela req
-    const dados = { codigo, nome, descrição, cargaHoraria, instrutor, modalidade, quantidadeVagas }
+    const dados = { codigo, nome, descricao, cargaHoraria, instrutor, modalidade, quantidadeVagas }
     // Salvando os dados em array(memoria) via push
     const curso = cursos.push(dados)
 
@@ -62,24 +62,24 @@ app.post("/cadastrar", (requisicao, resposta) => {
 
 app.put("/editar/:codigo", (requisicao, resposta) => {
 try {
- const codigo = requisicao.params.matricula
+ const codigo = requisicao.params.codigo
  const curso = cursos.find(curso => curso.codigo === codigo)
- if(!codigo){
+ if(!curso){
   return resposta.status(400).json({mensage:"curso não encontrado!"})
  }
  //enviado para o servidor novos dados para editar o curso
- const {novoNome, novoEmail} = requisicao.body
- if(!codigo || !nome || !descrição || !cargaHoraria || !instrutor || !modalidade || !quantidadeVagas){
+ const {novonome, novodescricao, novocargaHoraria, novoinstrutor, novomodalidade, novoquantidadeVagas} = requisicao.body
+ if(!novonome || !novodescricao || !novocargaHoraria || !novoinstrutor || !novomodalidade || !novoquantidadeVagas){
   return resposta.status(400).json({mensagem:"Todos os campos para edição são obrigatórios!"})
  }
 
- curso.codigo = novocodigo
- curso.nome = novonome
- curso.descrição = novodescrição
- curso.cargaHoraria = novocargaHoraria
- curso.instrutor = novoinstrutor
- curso.modalidade = novomodalidade
-  curso.quantidadeVagas = novoquantidadeVagas
+curso.codigo = curso.codigo
+curso.nome = novonome
+curso.descricao = novodescricao
+curso.cargaHoraria = novocargaHoraria
+curso.instrutor = novoinstrutor
+curso.modalidade = novomodalidade
+curso.quantidadeVagas = novoquantidadeVagas
 
  resposta.status(200).json({mensagem: "curso atualizado com sucesso!"})
 } catch (error){
@@ -89,7 +89,7 @@ try {
 
 app.patch("/editar/:codigo", (requisicao, resposta) => {
   try {
- const codigo = requisicao.params.matricula
+ const codigo = requisicao.params.codigo
  const curso = cursos.find(curso => curso.codigo === codigo)
  if(!curso){
   return resposta.status(400).json({mensage:"curso não encontrado!"})
@@ -122,7 +122,7 @@ resposta.status(200).json({mensagem: "Todos os cursos foram excluídos!"})
 
 app.delete("/excluir/:codigo", (requisicao, resposta) => {
   try {
-     const codigo = requisicao.params.matricula
+     const codigo = requisicao.params.codigo
     const index = cursos.findIndex(curso => curso.codigo === codigo)
     if(index === -1){
       return resposta.status(400).json({mensagem:"Curso não encontrado!"})
