@@ -57,6 +57,24 @@ novomodalidade, novoquantidadeVagas} = requisicao.body
     } catch (error) {
         resposta.status(500).json({mensagem:"Erro ao editar os cursos!"})
     }
-   static excluir
+    }
+   static excluirTodos(requisicao, resposta){
+    try {
+        CursoModel.excluirTodos()
+        resposta.status(200).json({mensagem:"Todos os cursos foram excluídos!"})    
+    } catch (error) {
+        resposta.status(500).json({mensagem:"Erro ao excluir todos os cursos!"})
+    }
+   }
+   static excluirPorCodigo(requisicao, resposta){
+    try {
+        const codigo = requisicao.params.codigo
+        CursoModel.excluirPorCodigo()
+        resposta.status(200).json({mensagem:"curso excluído com sucesso!"})
+    } catch (error) {
+        resposta.status(500).json({mensagem:"Erro ao excluir o curso!"})
+    }
+   }
 }
-}
+
+export default CursoController

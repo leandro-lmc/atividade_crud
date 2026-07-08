@@ -47,6 +47,15 @@ class CursoModel{
    static excluirTodos(){
     cursos.length = 0
    }
+
+   static excluirPorCodigo(codigo){
+     const index = cursos.findIndex(curso => curso.codigo === codigo)
+     if(index === -1){
+          return null
+     }
+     const cursoRemovido = cursos.splice(index, 1)
+     return cursoRemovido[0]
+   }
    
 }
 
